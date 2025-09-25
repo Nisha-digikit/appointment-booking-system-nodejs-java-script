@@ -8,16 +8,8 @@ module.exports.getDoc = async (req, res) => {
 
 //post
 module.exports.postDoc = (req, res) => {
-  const {
-    firstName,
-    lastName,
-    link,
-    image,
-    isDoc,
-    designation,
-    dept,
-    content,
-  } = req.body;
+  const { firstName, lastName, link, image, designation, dept, content } =
+    req.body;
 
   docModels
     .create({
@@ -25,7 +17,6 @@ module.exports.postDoc = (req, res) => {
       lastName,
       link,
       image,
-      isDoc,
       designation,
       dept,
       content,
@@ -43,16 +34,8 @@ module.exports.postDoc = (req, res) => {
 module.exports.updateDoc = (req, res) => {
   const { id } = req.params;
 
-  const {
-    firstName,
-    lastName,
-    link,
-    image,
-    isDoc,
-    designation,
-    dept,
-    content,
-  } = req.body;
+  const { firstName, lastName, link, image, designation, dept, content } =
+    req.body;
 
   docModels
     .findByIdAndUpdate(id, {
@@ -60,7 +43,6 @@ module.exports.updateDoc = (req, res) => {
       lastName,
       link,
       image,
-      isDoc,
       designation,
       dept,
       content,
@@ -87,4 +69,23 @@ module.exports.deleteDoc = (req, res) => {
       console.log("Error");
       res.send({ error: err, msg: "Somthing went wrong!" });
     });
+};
+
+//singleDoctor
+module.exports.singleDoc = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const doctor = await docModels.findById(id);
+
+    if (!doctor) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Doctor not found" });
+    } else {
+      res.json(doctor);
+    }
+  } catch (error) {
+    console.log("Error");
+    res.send({ msg: "Somthing went wrong!" });
+  }
 };

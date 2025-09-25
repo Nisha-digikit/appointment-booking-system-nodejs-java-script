@@ -19,7 +19,7 @@ const docSchema = new mongoose.Schema({
   },
   isDoc: {
     type: Boolean,
-    required: true,
+    required: false,
   },
   designation: {
     type: String,
