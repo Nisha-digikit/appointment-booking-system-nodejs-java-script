@@ -5,24 +5,29 @@ const appoinmentSchema = new mongoose.Schema(
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "doc",
-      require: true,
+      required: true,
     },
     date: {
       type: String,
-      require: true,
+      required: true,
     },
     time: {
       type: String,
-      require: true,
+      required: true,
     },
-    appoinmentFor: {
+    appointmentFor: {
       type: String,
-      require: true,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      default: "Scheduled",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-      require: true,
+      ref: "User",
+      required: true,
     },
   },
   { timestamps: true }

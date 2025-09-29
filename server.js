@@ -21,6 +21,6 @@ app.use("/api/doctors", require("./routes/docRouts"));
 
 app.use("/api/users", require("./routes/userRoutes"));
 
-app.use("/api/appoinments", require("./routes/appoinmentRouts"));
+app.use("/api/appointments", require("./routes/appoinmentRouts"));
 
 app.listen(PORT, () => console.log(`Server started at ${PORT}...`));

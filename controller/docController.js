@@ -8,7 +8,7 @@ module.exports.getDoc = async (req, res) => {
 
 //post
 module.exports.postDoc = (req, res) => {
-  const { firstName, lastName, link, image, designation, dept, content } =
+  const { firstName, lastName, link, image, designation, dept, content, desc } =
     req.body;
 
   docModels
@@ -20,6 +20,7 @@ module.exports.postDoc = (req, res) => {
       designation,
       dept,
       content,
+      desc,
     })
     .then((data) => {
       console.log("Save Successfully.........");
@@ -34,7 +35,7 @@ module.exports.postDoc = (req, res) => {
 module.exports.updateDoc = (req, res) => {
   const { id } = req.params;
 
-  const { firstName, lastName, link, image, designation, dept, content } =
+  const { firstName, lastName, link, image, designation, dept, content, desc } =
     req.body;
 
   docModels
@@ -46,6 +47,7 @@ module.exports.updateDoc = (req, res) => {
       designation,
       dept,
       content,
+      desc,
     })
     .then(() => {
       res.send("Updated Successfuly.......");

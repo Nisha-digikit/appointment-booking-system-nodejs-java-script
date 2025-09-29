@@ -6,11 +6,13 @@ const {
   deleteAppoinmemt,
   getSingleAppoinmemt,
 } = require("../controller/appoinmentController");
+const auth = require("../middleware/auth");
 
 const router = Router();
 
-router.get("/", getAppoinmemt);
-router.get("/:id", getSingleAppoinmemt);
+// router.get("/", getAppoinmemt);
+router.get("/", auth, getAppoinmemt);
+router.get("/:id", auth, getSingleAppoinmemt);
 router.post("/", postAppoinmemt);
 router.put("/:id", updateAppoinmemt);
 router.delete("/:id", deleteAppoinmemt);

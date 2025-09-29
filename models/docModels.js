@@ -33,6 +33,11 @@ const docSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  desc: {
+    type: String,
+    required: true,
+    default: "",
+  },
 });
 
 module.exports = mongoose.model("doc", docSchema);

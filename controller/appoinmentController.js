@@ -2,8 +2,9 @@ const appoinmentModels = require("../models/appoinmentModels");
 
 //get
 module.exports.getAppoinmemt = async (req, res) => {
-  const appoinment = await appoinmentModels.find({}, {}, { lean: true });
-  // .populate([{ path: "doctor", select: "name" }]);
+  const appoinment = await appoinmentModels
+    .find({ user: req.user._id }, {}, { lean: true })
+    .populate([{ path: "doctor" }, { path: "user", select: "_id name email" }]);
   res.send(appoinment);
 };
 
@@ -21,13 +22,17 @@ module.exports.getSingleAppoinmemt = async (req, res) => {
 };
 //post
 module.exports.postAppoinmemt = (req, res) => {
-  const { doctor, date, time, appoinmentFor, user } = req.body;
+  const { doctor, date, time, appointmentFor, user } = req.body;
+
+  if ((!doctor, !date, !time, !appointmentFor, !user)) {
+    return res.status(404).json({ message: "All the fields are mandatory" });
+  }
   appoinmentModels
     .create({
       doctor,
       date,
       time,
-      appoinmentFor,
+      appointmentFor,
       user,
     })
     .then((data) => {
@@ -43,14 +48,14 @@ module.exports.postAppoinmemt = (req, res) => {
 //update
 module.exports.updateAppoinmemt = (req, res) => {
   const { id } = req.params;
-  const { doctor, date, time, appoinmentFor, user } = req.body;
+  const { doctor, date, time, appoinmentFor } = req.body;
   appoinmentModels
     .findByIdAndUpdate(id, {
       doctor,
       date,
       time,
       appoinmentFor,
-      user,
+      // user,
     })
     .then(() => {
       res.send("Updated Successfuly.......");
