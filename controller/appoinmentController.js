@@ -45,6 +45,38 @@ module.exports.postAppoinmemt = (req, res) => {
     });
 };
 
+//Cancel Appointment
+module.exports.cancelAppoinmemt = async (req, res) => {
+  const { id } = req.params;
+
+  const appointment = await appoinmentModels.findOne({ _id: id });
+
+  console.log("appointment=>", appointment);
+
+  if (!appointment) {
+    return res
+      .status(400)
+      .json({ status: false, message: "Appointment Not Found" });
+  }
+
+  const updatedItem = await appoinmentModels.findByIdAndUpdate(
+    id,
+    {
+      // ...appointment,
+      status: "Canceled",
+    },
+    { new: true }
+  );
+
+  if (updatedItem._id) {
+    return res.json({
+      status: true,
+      message: "Appointment canceled Successfuly.......",
+      updatedItem,
+    });
+  }
+};
+
 //update
 module.exports.updateAppoinmemt = (req, res) => {
   const { id } = req.params;
