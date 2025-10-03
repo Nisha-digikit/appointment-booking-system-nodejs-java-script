@@ -2,7 +2,7 @@ const docModels = require("../models/docModels");
 
 //get
 module.exports.getDoc = async (req, res) => {
-  const doc = await docModels.find();
+  const doc = await docModels.find().sort({ _id: -1 });
   res.send(doc);
 };
 
@@ -32,14 +32,24 @@ module.exports.postDoc = (req, res) => {
     });
 };
 //update
-module.exports.updateDoc = (req, res) => {
+module.exports.updateDoc = async (req, res) => {
   const { id } = req.params;
 
-  const { firstName, lastName, link, image, designation, dept, content, desc } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    link,
+    image,
+    designation,
+    dept,
+    content,
+    desc,
+    isDoc,
+  } = req.body;
 
-  docModels
-    .findByIdAndUpdate(id, {
+  const updatedItem = await docModels.findByIdAndUpdate(
+    id,
+    {
       firstName,
       lastName,
       link,
@@ -48,29 +58,40 @@ module.exports.updateDoc = (req, res) => {
       dept,
       content,
       desc,
-    })
-    .then(() => {
-      res.send("Updated Successfuly.......");
-    })
-    .catch((err) => {
-      console.log("Error");
-      res.send({ error: err, msg: "Somthing went wrong!" });
+      isDoc,
+    },
+    { new: true }
+  );
+
+  if (updatedItem._id) {
+    return res.json({
+      status: true,
+      message: "Doctor Updated Successfuly.......",
+      updatedItem,
     });
+  }
+
+  // .catch((err) => {
+  //   console.log("Error");
+  //   res.send({ error: err, msg: "Somthing went wrong!" });
+  // });
 };
 
 //delete
-module.exports.deleteDoc = (req, res) => {
+module.exports.deleteDoc = async (req, res) => {
   const { id } = req.params;
 
-  docModels
-    .findByIdAndDelete(id)
-    .then(() => {
-      res.send("Deleted Successfuly.......");
-    })
-    .catch((err) => {
-      console.log("Error");
-      res.send({ error: err, msg: "Somthing went wrong!" });
-    });
+  const deletedItem = await docModels.findByIdAndDelete(id);
+
+  res.json({
+    status: true,
+    message: "Doctor Deleted Successfuly.......",
+  });
+
+  // .catch((err) => {
+  //   console.log("Error");
+  //   res.send({ error: err, msg: "Somthing went wrong!" });
+  // });
 };
 
 //singleDoctor

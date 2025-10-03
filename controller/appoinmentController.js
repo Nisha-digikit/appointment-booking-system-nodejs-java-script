@@ -55,14 +55,13 @@ module.exports.cancelAppoinmemt = async (req, res) => {
 
   if (!appointment) {
     return res
-      .status(400)
+      .status(404)
       .json({ status: false, message: "Appointment Not Found" });
   }
 
   const updatedItem = await appoinmentModels.findByIdAndUpdate(
     id,
     {
-      // ...appointment,
       status: "Canceled",
     },
     { new: true }

@@ -11,7 +11,7 @@ const docSchema = new mongoose.Schema({
   },
   link: {
     type: String,
-    required: true,
+    required: false,
   },
   image: {
     type: String,
@@ -35,7 +35,7 @@ const docSchema = new mongoose.Schema({
   },
   desc: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
 });

@@ -17,6 +17,10 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("Error"));
 
+app.get("/", (req, res) => {
+  return res.send("Welcome to Akshaya Clinic ");
+});
+
 app.use("/api/doctors", require("./routes/docRouts"));
 
 app.use("/api/users", require("./routes/userRoutes"));
